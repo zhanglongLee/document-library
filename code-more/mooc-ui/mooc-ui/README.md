@@ -1,24 +1,20 @@
-# mooc-ui
+# mooc-lee-ui 组件库测试版本
 
-## Project setup
-```
-npm install
-```
+## 快速开始
 
-### Compiles and hot-reloads for development
+### 1.下载组件库
+```bash
+npm i mooc-lee-ui
 ```
-npm run serve
-```
+### 2.引入组件库
+```javascript
+// 全局引入
+import 'mooc-lee-ui/dist/css/index.css';
+import Mui from 'mooc-lee-ui';
+Vue.use(Mui);
 
-### Compiles and minifies for production
+// 按需引入
+import 'mooc-lee-ui/dist/css/demo.css';
+import { Demo } from 'mooc-lee-ui';
+Vue.use(Demo);
 ```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
