@@ -1,0 +1,20 @@
+.m-card {
+  width        : 270px;
+  border-radius: 8px;
+  background   : #fff;
+  box-shadow   : 0 6px 10px;
+  overflow: hidden;
+  padding-bottom: 8px;
+
+  &-img{
+    display: block;
+    width: 100%;
+    padding-bottom: 8px;
+  }
+
+  &-summary{
+    padding: 0 10px;
+    text-align: left;
+    font-size: 14px;
+  }
+}

@@ -19,7 +19,9 @@
     "build": "npm run build:js && npm run build:css && npm publish",
     "lint": "vue-cli-service lint",
     "build:js": "webpack --config ./webpack.components.js",
-    "build:css": "gulp sass"
+    "build:css": "gulp sass",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -41,7 +43,8 @@
     "sass": "^1.45.2",
     "sass-loader": "^5.0.1",
     "vue-loader": "^15.9.8",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "vuepress": "^1.9.5"
   },
   "eslintConfig": {
     "root": true,
