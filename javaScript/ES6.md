@@ -71,3 +71,78 @@ fn(1, 2, 3, 4);
 
 - 与 this 无关的回调。定时器，数组的方法回调。
 - 不适合与 this 有关的回调。DOM元素事件回调，对象的方法。
+
+# 四、迭代器
+
+`iteration`成为迭代器，又叫遍历器。
+
+## **作用：**
+
+1. 为各种数据结构，提供一个统一的、简便的访问接口；
+2. 使得数据结构的成员能够按某种次序排列；
+3. 主要供`for...of`消费
+
+## **工作原理：**
+
+- 创建一个指针对象，指向当前数据结构的起始位置
+- 第一次调用对象的next方法，指针自动指向数据结构的第一个成员
+- 接下来不断调用next方法，指针一直往后移动，直到指向最后一个成员
+- 每调用next方法返回一个包含value和done属性的对象
+
+```javascript
+// 自定义迭代器
+let obj = {
+    name: '究极一班',
+    stus: [
+        'xiaoming',
+        'wangwu',
+        'zhaoliu',
+        'lixing'
+    ],
+    [Symbol.iterator]: function () {
+        // 索引
+        let index = 0;
+
+        return {
+            next: () => {
+                let result
+                if (index < this.stus.length) {
+                    result = { value: this.stus[index], done: false }
+                    // 索引自增
+                    index++
+                } else {
+                    result = { value: undefined, done: true }
+                }
+                return result
+            }
+        };
+    }
+}
+for (let i of obj) {
+    console.log(i);
+    // xiaoming
+    // wangwu
+    // zhaoliu
+    // lixing
+}
+```
+
+
+
+在js里原生具备 Iterator 接口的数据结构如下：
+
+- Array
+- Map
+- Set
+- String
+- TypedArray
+- 函数的 arguments 对象
+- NodeList 对象
+
+## 使用场景：
+
+- 结构赋值
+- 扩展运算符
+- generator函数。调用 Generator 函数后，该函数并不执行，返回的也不是函数运行结果，而是返回一个遍历器对象
+- Array.from()、Promise.all()等等
+
