@@ -58,9 +58,9 @@
 2.一定会在load事件之前执行，可能会在DOMContentLoaded之前或之后执行。
 
 情况1： HTML 还没有被解析完的时候，async脚本已经加载完了，那么 HTML 停止解析，去执行脚本，脚本执行完毕后触发DOMContentLoaded事件。如下图所示：
-![image-20220104162634305](D:\前端学习\zhanglongli\document-library\面试篇\每日一题.assets\image-20220104162634305.png)
+![image-20220104162634305](D:\前端学习\zhanglongli\document-library\面试篇\JS部分.assets\image-20220104162634305.png)
 情况2： HTML 解析完了之后，async脚本才加载完，然后再执行脚本，那么在HTML解析完毕、async脚本还没加载完的时候就触发DOMContentLoaded事件。如下图所示：
-![image-20220104162657199](D:\前端学习\zhanglongli\document-library\面试篇\每日一题.assets\image-20220104162657199.png)
+![image-20220104162657199](D:\前端学习\zhanglongli\document-library\面试篇\JS部分.assets\image-20220104162657199.png)
 总之， DomContentLoaded 事件只关注 HTML 是否被解析完，而不关注 async 脚本。
 
 ## 3.3 defer
@@ -69,9 +69,9 @@
 2.DOMContentLoaded 只有在 defer 脚本执行结束后才会被触发。
 
 情况1：HTML还没解析完成时，defer脚本已经加载完毕，那么defer脚本将等待HTML解析完成后再执行。defer脚本执行完毕后触发DOMContentLoaded事件。如下图所示
-![image-20220104162715624](D:\前端学习\zhanglongli\document-library\面试篇\每日一题.assets\image-20220104162715624.png)
+![image-20220104162715624](D:\前端学习\zhanglongli\document-library\面试篇\JS部分.assets\image-20220104162715624.png)
 情况2：HTML解析完成时，defer脚本还没加载完毕，那么defer脚本继续加载，加载完成后直接执行，执行完毕后触发DOMContentLoaded事件。如下图所示：
-![image-20220104162726574](D:\前端学习\zhanglongli\document-library\面试篇\每日一题.assets\image-20220104162726574.png)
+![image-20220104162726574](D:\前端学习\zhanglongli\document-library\面试篇\JS部分.assets\image-20220104162726574.png)
 
 《JavaScript高级程序设计》一书的说法是:“按照h5规范，两个defer脚本会安装它们出现的先后顺序执行，两个脚本会在DOMContentLoaded之前执行。但事实上，defer脚本不一定会按顺序执行，也不一定会在DOMContentLoaded之前执行。”
 
@@ -130,7 +130,7 @@ V8 引擎采用的是分代式垃圾回收机制。目的是通过区分「临�
 
 **V8堆的整体大小就是新生代所用内存空间加上老生代的内存空间。**如下图：
 
-![image-20220105175758859](D:\前端学习\zhanglongli\document-library\面试篇\每日一题.assets\image-20220105175758859.png)
+![image-20220105175758859](D:\前端学习\zhanglongli\document-library\面试篇\JS部分.assets\image-20220105175758859.png)
 
 #### **V8新生代算法（Scavenge）**
 
@@ -168,7 +168,7 @@ Mark-Sweep是标记清除的意思，它分为标记和清除两个阶段。**Ma
 
 为了解决Mark-Sweep的内存碎片问题，Mark-Compact被提出来。Mark-Compact是标记整理的意思。**在标记清除的过程中，将活着的对象往一端移动，移动完成后，直接清理掉边界外的内存。**完成移动后，就可以直接清除最右边的存活对象后面的内存区域完成回收。
 
-![image-20220105175717945](D:\前端学习\zhanglongli\document-library\面试篇\每日一题.assets\image-20220105175717945.png)
+![image-20220105175717945](D:\前端学习\zhanglongli\document-library\面试篇\JS部分.assets\image-20220105175717945.png)
 
 #### **增量式标记回收(Incremental Marking)**
 
@@ -706,52 +706,3 @@ person.sayHi();//I am 张三,age is 12.
 
 - [JavaScript深入之new的模拟实现](https://github.com/mqyqingfeng/Blog/issues/13)
 
-
-
-# 11.Vue watch 和 computed 的区别？
-
-## 11.1 共同点：
-`watch`和`computed`都是以Vue的依赖追踪机制为基础
-## 11.2 不同点：
-1、计算属性依赖`computed watcher`、watch监听依赖的是`user watcher`。
-2、定义方式不同，计算属性本质上是`get/set`形式，即使写成函数形式，Vue底层也会规范化为get/set形式。而watch提供的是一个回调函数。
-3、可取消性不同，计算属性一旦依赖，无法取消，也就是说定义后无法更改其get函数，而使用`$watch`方法实现的监听它返回一个`unwatch`可随时取消，取消后当数据再次发生变动时，不会再执行我们的回调函数。
-4、时效性不同，计算属性的值会缓存，依赖数据不发生改变，`computed`会返回缓存的值。对于`watch`而言，只要我们的响应式变量发生了变化，就会执行回调函数。
-5、`computed`不支持异步，`watch`支持异步操作。
-## 11.3 应用场景
-computed：用于处理复杂的逻辑运算；一个数据受一个或多个数据影响；用来处理watch和methods无法处理的，或处理起来不方便的情况。例如**处理模板中的复杂表达式**、**购物车里面的商品数量和总金额之间的变化关系**等。
-watch：用来处理当一个属性发生变化时，需要执行某些具体的业务逻辑操作，或要在数据变化时执行异步或开销较大的操作；一个数据改变影响多个数据。例如用来**监控路由**、**inpurt 输入框值的特殊处理**等。
-
-**参考文章**
-- [Vue中computed和watch的区别](https://segmentfault.com/a/1190000022740275)
-- [第 146 题：Vue 中的 computed 和 watch 的区别在哪里](https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/304)
-
-
-
-# 12.Vue 数据双向绑定原理
-
-Vue实现数据双向绑定主要利用的就是: **数据劫持**和**发布订阅模式**。
-
-**发布订阅模式：**
-
-定义了对象间的一种**一对多的关系**，**让多个观察者对象同时监听某一个主题对象，当主题对象发生改变时，所有依赖于它的对象都将得到通知**。
-
-**数据劫持：**
-
-vue2使用的是**`Object.defineProperty()`**，vue3使用的是**`proxy`**的set方法**劫持到数据的变化**。
-
-## 12.1 双向绑定原理
-
-![1737575729-5df757d408790](D:\前端学习\zhanglongli\document-library\面试篇\每日一题.assets\1737575729-5df757d408790.png)
-
-`View模板`首先经过`Complier（编译器对象）`进行编译，在编译的过程中，会分析 View 模板中哪里使用到了**Vue数据（Model中的数据）**，一旦使用了**Vue数据（Model中的数据）**就会创建一个`Watcher（观察者对象）`，并且将这个观察者对象添加到`Dep（发布者对象）`的数组中，同时获取到Vue中的数据**替换模板字符串**编译生成一个新的View视图。
-
-在创建Vue实例的过程中，会对Vue data中的数据进行`Observer`数据劫持操作，**当View视图或者Vue Model中发生数据变化的时候，通知Dep发布者对象，再通知`Watcher（观察者对象）`进行视图的更新**，从而实现数据的双向绑定。
-
-## 12.2 总结
-
-总之就是，在创建Vue实例的时候给传入的data进行数据劫持，同时视图编译的时候，对于使用到data中数据的地方进行创建Watcher对象，然后在数据劫持的getter中添加到发布者对象中，当劫持到数据发生变化的时候，就通过发布订阅模式以回调函数的方式通知所有观察者操作DOM进行更新，从而实现数据的双向绑定。
-
-**参考文章**
-
-- [Vue数据双向绑定原理和实现](https://segmentfault.com/a/1190000021327394)
