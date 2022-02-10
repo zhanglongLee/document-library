@@ -1,0 +1,10 @@
+// 普通路由加载
+import <%= data.name %> from './<%= data.name %>.vue'
+// 路由懒加载
+const <%= data.name %> = ()=> import('./<%= data.name %>.vue')
+export default = {
+  path:'/<%= data.name %>',
+  name:'<%= data.name %>',
+  component:'<%= data.name %>',
+  children:[]
+}
