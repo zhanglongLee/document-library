@@ -1,22 +1,46 @@
 <template>
-    <div class="<%= data.lowerName %>"></div>
+  <div class="<%= data.lowerName %>">
+    <h1>{{ msg }} Page</h1>
+  </div>
 </template>
 
 <script>
-export default {
-    name: "<%= data.lowerName %>",
-    data() {
-        return {};
+  export default {
+    name: '<%= data.name %>',
+    components: {
+
     },
-    methods: {},
-    created() {},
-    mounted() {},
-    mixin: [],
-    computed() {},
-};
+    mixins: [],
+    props: {
+      msg: {
+        type: String,
+        default: '<%= data.name %>'
+      }
+    },
+    data: function () {
+      return {
+
+      }
+    },
+    computed: {
+
+    },
+    watch: {
+
+    },
+    created() {
+
+    },
+    mounted() {
+
+    },
+    methods: {
+
+    }
+  }
 </script>
 
-<style lang="less" scoped>
-.<%= data.lowerName %> {
-}
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+  .<%= data.lowerName %> {}
 </style>
