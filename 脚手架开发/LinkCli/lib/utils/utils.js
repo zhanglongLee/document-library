@@ -1,6 +1,31 @@
 const path = require('path')
 const ejs = require('ejs')
 const fs = require("fs")
+
+/**
+ * format
+ * https => https://github.com/NuoHui/node_code_constructor.git
+ * ssh => git@github.com:NuoHui/node_code_constructor.git
+ * want => github:NuoHui/node_code_constructor
+ */
+const getRealGitRepo = function (gitRepo) {
+  let gitRepoArr = gitRepo.split("#")
+  gitRepo = gitRepoArr.length > 1 ? gitRepoArr[0] : gitRepo
+  let branch = gitRepoArr.length > 1 ? '#' + gitRepoArr[1] : ""
+  const sshRegExp = /^git@github.com:(.+)\/(.+).git$/;
+  const httpsRegExp = /^https:\/\/github.com\/(.+)\/(.+).git$/;
+  const giteeHttpsRegExp = /^https:\/\/gitee.com\/(.+)\/(.+).git$/;
+  if (sshRegExp.test(gitRepo)) {
+    // ssh
+    const match = gitRepo.match(sshRegExp);
+    return `github:${match[1]}/${match[2]}`;
+  }
+  if (httpsRegExp.test(gitRepo)) {
+    // https
+    const match = gitRepo.match(httpsRegExp);
+    return `github:${match[1]}/${match[2]}${branch}`;
+  }
+}
 /**
  * 编译ejs的方法
  */
@@ -41,5 +66,6 @@ const writeToFile = (targetPath, content) => {
 module.exports = {
   compile,
   writeToFile,
-  createDirSync
+  createDirSync,
+  getRealGitRepo
 }

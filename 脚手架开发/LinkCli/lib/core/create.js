@@ -3,8 +3,16 @@ const {
   createProjectAction,
   createComponentAction,
   createPageAction,
-  createStoreAction
+  createStoreAction,
+  listTemplateAction,
+  addTemplateAction,
+  deleteTemplateAction,
 } = require('./actions')
+const {
+  addProjectTemplate,
+  listAllTemplate,
+  deleteTemplate
+} = require('./template-manager')
 const createCommands = () => {
 
   program
@@ -32,6 +40,21 @@ const createCommands = () => {
     .action((store) => {
       createStoreAction(store, program.opts().dest || `src/store/${store}`)
     })
+  // 列出支持的项目模板
+  program
+    .command('list')
+    .description('list all available project template')
+    .action(listTemplateAction);
+  // 删除一个项目模板
+  program
+    .command('delete <template-name>')
+    .description('delete a project template')
+    .action(deleteTemplateAction);
+  // 新增一个项目模板
+  program
+    .command('add <template-name> <gitRepo-address>')
+    .description('add a project template')
+    .action(addTemplateAction);
 }
 
 module.exports = {

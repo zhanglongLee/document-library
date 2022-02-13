@@ -2,29 +2,75 @@
 const path = require('path')
 const { promisify } = require('util')
 const download = promisify(require('download-git-repo'))
-const { vueRepo } = require('../config/repo-config')
 const { commandSpawn } = require('../utils/terminal')
 const { compile, writeToFile, createDirSync } = require('../utils/utils')
+const { logWithSpinner, stopSpinner, failedSpinner } = require('../utils/spinner')
+const chalk = require('chalk')
+const inquirer = require('inquirer')
+const {
+  addProjectTemplate,
+  listAllTemplate,
+  deleteTemplate,
+  chooseTemplate
+} = require('./template-manager')
 
 // callback -> promisify(函数) -> Promise -> async await
 // 创建项目action
 const createProjectAction = async (project) => {
+  // 1.clone项目
   try {
-    console.log('LinkCli helps you create project...');
-    // 1.clone项目
-    await download(vueRepo, project, { clone: true })
-    console.log('LinkCli helps you install dependency files...');
-    // 2.执行npm install
-    const command = process.platform === 'win32' ? 'npm.cmd' : 'npm'
-    await commandSpawn(command, ['install'], { cwd: `./${project}` })
-    // 3.运行npm run serve
-    console.log('LinkCli helps you run the project...');
-    await commandSpawn(command, ['run', 'serve'], { cwd: `./${project}` })
-    // 4.打开浏览器
-    // console.log('LinkCli helps you open a browser...');
+    // 选择下载的模板,并获取对应下载地址
+    let address = await chooseTemplate()
+    console.log(`✨ Creating project in ${chalk.yellow(project)}.`);
+    stopSpinner();
+    logWithSpinner(
+      `Download project template. This might take a while...`
+    );
+    await download(address, project, { clone: false })
+    stopSpinner();
+    // 2.是否需要安装依赖。Y 执行npm install
+    const promptList = [{
+      type: "confirm",
+      message: "是否安装依赖？",
+      name: "needRunInstall",
+    }]
+    const { needRunInstall } = await inquirer.prompt(promptList)
+    if (needRunInstall) {
+      stopSpinner();
+      logWithSpinner(
+        `Installing dependency files....`
+      );
+      // 需要安装依赖
+      const command = process.platform === 'win32' ? 'npm.cmd' : 'npm'
+      try {
+        await commandSpawn(command, ['install'], { cwd: `./${project}` })
+        stopSpinner();
+      } catch (error) {
+        console.log(`${chalk.yellow(project)} npm install failed.`)
+        console.log(error);
+      }
+
+      try {
+        // 3.运行npm run serve
+        console.log('LinkCli helps you run the project...');
+        await commandSpawn(command, ['run', 'serve'], { cwd: `./${project}` })
+      } catch (error) {
+        failedSpinner(`${chalk.yellow(project)} npm run serve failed.`)
+        console.log(error);
+      }
+
+    } else {
+      // 用户不选择安装依赖，指导用户进入项目，运行npm install命令
+      console.log(`cd ./${chalk.yellow(project)}`);
+      console.log(`npm install`);
+    }
   } catch (error) {
+    failedSpinner(`created project ${chalk.yellow(project)} failed.`)
     console.log(error);
   }
+
+
+
 }
 
 // 创建组件action
@@ -68,6 +114,7 @@ const createPageAction = async (name, dest) => {
   }
 }
 
+// 新增store的action
 const createStoreAction = async (name, dest) => {
   try {
     let data = { name, lowerName: String.prototype.toLowerCase.call(name) }
@@ -90,9 +137,38 @@ const createStoreAction = async (name, dest) => {
     console.log('错误啦~', error);
   }
 }
+
+// 显示模板列表的action
+const listTemplateAction = () => {
+  listAllTemplate()
+    .catch(err => {
+      console.log(err);
+      process.exit(1)
+    })
+
+}
+// 新增模板的action
+const addTemplateAction = (templateName, gitRepoAddress) => {
+  addProjectTemplate(templateName, gitRepoAddress)
+    .catch(err => {
+      console.log(err);
+      process.exit(1)
+    })
+}
+// 删除指定名字模板的action
+const deleteTemplateAction = (templateName) => {
+  deleteTemplate(templateName)
+    .catch(err => {
+      console.log(err);
+      process.exit(1)
+    })
+}
 module.exports = {
   createProjectAction,
   createComponentAction,
   createPageAction,
-  createStoreAction
+  createStoreAction,
+  listTemplateAction,
+  addTemplateAction,
+  deleteTemplateAction,
 }
