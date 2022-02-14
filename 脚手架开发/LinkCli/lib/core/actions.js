@@ -52,7 +52,7 @@ const createProjectAction = async (project) => {
 
       try {
         // 3.运行npm run serve
-        console.log('LinkCli helps you run the project...');
+        console.log('Running the project...');
         await commandSpawn(command, ['run', 'serve'], { cwd: `./${project}` })
       } catch (error) {
         failedSpinner(`${chalk.yellow(project)} npm run serve failed.`)
