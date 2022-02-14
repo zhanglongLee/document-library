@@ -9,6 +9,11 @@
 npm install linkCli -g
 ```
 
+## 更多帮助
+```shell
+linkCli --help
+```
+
 ## 创建项目
 
 vue常规模板：
