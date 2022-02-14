@@ -57,6 +57,15 @@ async function listAllTemplate() {
 // 删除对应模板
 async function deleteTemplate(templateName) {
   const templateGitRepoJson = readTemplateJson();
+  if(Object.keys(templateGitRepoJson).length<=1){
+    console.log(
+      `  ` + chalk.red(`There must be at least one template`)
+    );
+    console.log(
+      `  ` + `delete project template ${chalk.red(templateName)} failed.`
+    );
+    return
+  }
   if (!templateGitRepoJson[templateName]) {
     console.log(
       `  ` + chalk.red(`template name ${templateName} has not exists.`)
