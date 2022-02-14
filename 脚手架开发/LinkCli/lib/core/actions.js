@@ -81,10 +81,10 @@ const createComponentAction = async (name, dest) => {
     // 2.将result写入.vue文件
     // process.cwd()为当前cmd执行命令的路径
     const targetPath = path.resolve(process.cwd(), `./${dest}/${name}.vue`)
-    console.log(targetPath);
 
     // 4.放到对应的文件夹中
-    writeToFile(targetPath, result)
+    await writeToFile(targetPath, result)
+    console.log(`✨ Create component in ${chalk.yellow(targetPath)} successfully.`);
   } catch (error) {
     console.log(error);
   }
@@ -101,13 +101,13 @@ const createPageAction = async (name, dest) => {
     // process.cwd()为当前cmd执行命令的路径
     const targetPagePath = path.resolve(process.cwd(), `./${dest}/${name}.vue`)
     const targetRouterPath = path.resolve(process.cwd(), `./${dest}/router.js`)
-    console.log(targetPagePath);
-    console.log(targetRouterPath);
 
     // 4.放到对应的文件夹中
     if (createDirSync(dest)) {
-      writeToFile(targetPagePath, pageResult)
-      writeToFile(targetRouterPath, routerResult)
+      await writeToFile(targetPagePath, pageResult)
+      console.log(`✨ Create page in ${chalk.yellow(targetPagePath)} successfully.`);
+      await writeToFile(targetRouterPath, routerResult)
+      console.log(`✨ Create router in ${chalk.yellow(targetRouterPath)} successfully.`);
     }
   } catch (error) {
     console.log('错误啦~', error);
@@ -125,13 +125,13 @@ const createStoreAction = async (name, dest) => {
     // process.cwd()为当前cmd执行命令的路径
     const targetStorePath = path.resolve(process.cwd(), `./${dest}/index.js`)
     const targetTypesPath = path.resolve(process.cwd(), `./${dest}/types.js`)
-    console.log(targetStorePath);
-    console.log(targetTypesPath);
 
     // 4.放到对应的文件夹中
     if (createDirSync(dest)) {
-      writeToFile(targetStorePath, storeResult)
-      writeToFile(targetTypesPath, typesResult)
+      await writeToFile(targetStorePath, storeResult)
+      console.log(`✨ Create store in ${chalk.yellow(targetStorePath)} successfully.`);
+      await writeToFile(targetTypesPath, typesResult)
+      console.log(`✨ Create type in ${chalk.yellow(targetTypesPath)} successfully.`);
     }
   } catch (error) {
     console.log('错误啦~', error);

@@ -1,6 +1,6 @@
 {
   "name": "linkcm-cli",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "这是一个帮助你快速构建和开发前端项目的脚手架",
   "main": "index.js",
   "keywords": [
