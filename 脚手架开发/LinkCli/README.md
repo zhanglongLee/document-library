@@ -1,4 +1,4 @@
-# linkCli
+# linkcm-cli
 ## 一个快速搭建和开发前端项目的脚手架
 
 > 正式版本在公司内部使用，这个属于demo版本
@@ -6,12 +6,12 @@
 如何安装？
 
 ```shell
-npm install linkCli -g
+npm install linkcm-cli -g
 ```
 
 ## 更多帮助
 ```shell
-linkCli --help
+linkcm-cli --help
 ```
 
 ## 创建项目
@@ -32,8 +32,8 @@ vue子应用（qiankun-vue-sub）
 创建项目
 
 ```shell
-linkCli create your_project_name
-例如：linkCli create demo1
+linkcm-cli create your_project_name
+例如：linkcm-cli create demo1
 ```
 
 自动拉取项目模板、安装项目依赖、自动启动项目
@@ -41,21 +41,21 @@ linkCli create your_project_name
 ## 查看项目模板列表
 
 ```shell
-linkCli list
+linkcm-cli list
 ```
 
 ##  新增项目模板
 
 ```shell
-linkCli add template_name gitRepo_address
-例如：linkCli add demo1 www.github.com/demo1/demo.git
+linkcm-cli add template_name gitRepo_address
+例如：linkcm-cli add demo1 www.github.com/demo1/demo.git
 ```
 
 ##  删除项目模板
 
 ```shell
-linkCli delete template_name
-例如：linkCli delete demo1
+linkcm-cli delete template_name
+例如：linkcm-cli delete demo1
 ```
 
 
@@ -73,8 +73,8 @@ linkCli delete template_name
 ### 创建Vue组件：
 
 ````shell
-linkCli addcpn YourComponentName # 例如linkCli add NavBar，默认会存放到src/components文件夹中
-linkCli addcpn YourComponentName -d src/pages/home # 也可以指定存放的具体文件夹
+linkcm-cli addcpn YourComponentName # 例如linkcm-cli add NavBar，默认会存放到src/components文件夹中
+linkcm-cli addcpn YourComponentName -d src/pages/home # 也可以指定存放的具体文件夹
 ````
 
 
@@ -82,8 +82,8 @@ linkCli addcpn YourComponentName -d src/pages/home # 也可以指定存放的具
 ### 创建Vue页面，并配置路由
 
 ```shell
-linkCli addpage YourPageName # 例如linkCli addpage Home，默认会放到src/pages/home/Home.vue中，并且会创建src/page/home/router.js
-linkCli addpage YourPageName -d src/views # 也可以指定文件夹，但需要手动集成路由
+linkcm-cli addpage YourPageName # 例如linkcm-cli addpage Home，默认会放到src/pages/home/Home.vue中，并且会创建src/page/home/router.js
+linkcm-cli addpage YourPageName -d src/views # 也可以指定文件夹，但需要手动集成路由
 ```
 
 为什么会创建router.js文件：
@@ -107,8 +107,8 @@ const routes = files.keys().map(key => {
 ### 创建Vuex子模块
 
 ```shell
-linkCli addstore YourVuexChildModuleName # 例如linkCli addstore home，默认会放到src/store/modules/home/index.js和types.js
-linkCli addstore YourVuexChildModuleName -d src/vuex/modules # 也可以指定文件夹
+linkcm-cli addstore YourVuexChildModuleName # 例如linkcm-cli addstore home，默认会放到src/store/modules/home/index.js和types.js
+linkcm-cli addstore YourVuexChildModuleName -d src/vuex/modules # 也可以指定文件夹
 ```
 
 创建完成后，不需要手动配置，已经动态将所有子模块集成进去：
