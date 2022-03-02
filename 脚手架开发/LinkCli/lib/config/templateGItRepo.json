@@ -1,1 +1,11 @@
-{"vue-main":{"github":"https://github.com/zhanglongLee/vue-main-application.git#main"},"test":{"github":"https://github.com/zhanglongLee/vue-main-application.git#main"}}
+{
+  "vue-default-template": {
+    "github": "https://github.com/zhanglongLee/vue-main-application.git"
+  },
+  "qiankun-vue-main": {
+    "github": "https://github.com/zhanglongLee/qiankun-vue-main.git"
+  },
+  "qiankun-vue-sub": {
+    "github": "https://github.com/zhanglongLee/qiankun-vue-sub.git"
+  }
+}

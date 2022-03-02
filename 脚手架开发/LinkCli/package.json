@@ -1,6 +1,6 @@
 {
   "name": "linkcm-cli",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "这是一个帮助你快速构建和开发前端项目的脚手架",
   "main": "index.js",
   "keywords": [
@@ -23,12 +23,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "inquirer": "^6.3.1",
-    "is-git-url": "^1.0.0",
     "chalk": "^2.4.2",
     "commander": "^9.0.0",
     "download-git-repo": "^3.0.2",
     "ejs": "^3.1.6",
+    "inquirer": "^6.3.1",
+    "is-git-url": "^1.0.0",
     "ora": "^3.4.0"
   }
 }
