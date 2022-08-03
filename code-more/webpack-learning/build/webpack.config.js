@@ -1,7 +1,10 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-module.exports = {
+
+console.log('process.env.NODE_ENV=', process.env.NODE_ENV) // 打印环境变量
+
+const config = {
   mode: "development",//指定构建模式
   entry: {
     main: path.resolve(__dirname, '../src/index.js'),// 指定构建入口文件
@@ -13,7 +16,7 @@ module.exports = {
   },
   devServer: {
     static: {
-      directory: path.resolve(__dirname, '../dist') // 开发服务器启动路径
+      directory: path.resolve(__dirname, '../public') // 开发服务器启动路径
     },
     hot: true,
     open: true
@@ -57,3 +60,10 @@ module.exports = {
   //   ]
   // }
 }
+
+module.exports = (env, argv) => {
+  console.log('argv.mode=',argv.mode) // 打印 mode(模式) 值
+  // 这里可以通过不同的模式修改 config 配置
+  return config;
+}
+
